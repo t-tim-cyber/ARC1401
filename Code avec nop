@@ -1,0 +1,164 @@
+.data
+  a: .half 5,5,5,5,5
+  b: .half 10,10,10,10,10
+  c: .half 7,7,7,7,7
+  cpt: .word 1
+  tr: .byte 1 #variable boucle infinie
+  i: .byte 0 #variable de boucle
+  d: .byte 0 #valeur de reference pour if
+  e: .byte 5 #sortie de boucle
+
+.text
+  main:
+    nop
+    nop
+    nop
+    nop
+    nop
+    lb a7,e #chargement valeur e dans a7
+    la a2,a #chargement adresse a dans a2
+    la a3,b #chargement adresse b dans a3
+    la a4,c #chargement adresse c dans a4
+    lb a0,tr #chargement valeur tr dans registre a0
+    lb a5,i #chargement de la valeur de i dans a5
+    lb a1,cpt #chargement valeur cpt dans a1
+    lb a6,d #chargement valeur d dans a6
+    nop
+    nop
+    nop
+    nop
+    nop
+    beq a0,a0,while #test pour entrer dans boucle while (entrée dans boucle infinie)
+    nop
+    nop
+    nop
+    nop
+    nop
+
+  while:
+    nop
+    nop
+    nop
+    nop
+    nop
+    bne a1,a6,if_false #test condition if
+    nop
+    nop
+    nop
+    nop
+    nop
+    jal if_true #saut pour if_false
+    nop
+    nop
+    nop
+    nop
+
+  if_true:
+    lh t1,0(a3) #chargement première valeur de a
+    lh t2,0(a4) #chargement première valeur de b
+    nop
+    nop
+    nop
+    nop
+    nop
+    add t0,t1,t2 #t0=t1+t2
+    nop
+    nop
+    nop
+    nop
+    nop
+    sh t0,0(a2) #stockage du résultat dans a
+    addi a2,a2,2 #addition de 2 octets (déplacement du pointeur a)
+    addi a3,a3,2 #addition de 2 octets (déplacement du pointeur b)
+    addi a4,a4,2 #addition de 2 octets (déplacement du pointeur c)
+    addi a5,a5,2 #incrémentation du compteur i
+    nop
+    nop
+    nop
+    nop
+    nop
+    blt a5,a7,if_true #condition de continuation de la boucle
+    nop
+    nop
+    nop
+    nop
+    nop
+    lb a7,e #chargement valeur e dans a7
+    la a2,a #chargement adresse a dans a2
+    la a3,b #chargement adresse b dans a3
+    la a4,c #chargement adresse c dans a4
+    lb a5,i #chargement valeur i dans a5
+    addi a6,a6,-1 #a6=a6-1 (changement pour ne plus rentre dans if_true)
+    nop
+    nop
+    nop
+    nop
+    jal compteur #saut pour compteur
+    nop
+    nop
+    nop
+    nop
+    
+  if_false:
+    lh t1,0(a3) #chargement première valeur de a
+    lh t2,0(a4) #chargement première valeur de b
+    nop
+    nop
+    nop
+    nop
+    sub t0,t1,t2 #t0=t1-t2
+    nop
+    nop
+    nop
+    nop
+    nop
+    sh t0,0(a2) #stockage du résultat dans a
+    addi a2,a2,2 #addition de 2 octets (déplacement du pointeur a)
+    addi  a3,a3,2 #addition de 2 octets (déplacement du pointeur b)
+    addi a4,a4,2 #addition de 2 octets (déplacement du pointeur c)
+    addi a5,a5,2 #incrémentation du compteur i
+    nop
+    nop
+    nop
+    nop
+    nop
+    blt a5,a7,if_false #condition de continuation de la boucle
+    nop
+    nop
+    nop
+    nop
+    nop
+    lb a7,e #chargement valeur e dans a7
+    la a2,a #chargement adresse a dans a2
+    la a3,b #chargement adresse b dans a3
+    la a4,c #chargement adresse c dans a4
+    lb a5,i #chargement valeur i dans a5
+    nop
+    nop
+    nop
+    nop
+    jal compteur #saut pour compteur
+    nop
+    nop
+    nop
+    nop
+    
+  compteur: #incrementation compteur  
+    lw a1,cpt #chargement valeur cpt dans a1
+    addi a1,a1,-1 #a1=a1-1
+    nop
+    nop
+    nop
+    nop
+    jal while #saut pour while
+    nop
+    nop
+    nop
+    nop
+    
+   fin:
+    nop
+    nop
+    nop
+    nop
+    jal fin #condition infinie
